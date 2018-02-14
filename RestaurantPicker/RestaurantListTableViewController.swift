@@ -25,8 +25,6 @@ class RestaurantListTableViewController: UITableViewController {
         }
     }
     
-    //newcomment
-    
     override func viewDidAppear(_ animated: Bool) {
         
         tableView.reloadData()
