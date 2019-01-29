@@ -68,8 +68,9 @@ class PickedRestaurantViewController: UIViewController {
             
             mapItem.name = "\(name)"
             
-            let launchOptions = [MKLaunchOptionsDirectionsModeDriving: MKLaunchOptionsDirectionsModeKey]
-            mapItem.openInMaps(launchOptions: launchOptions)
+            // let launchOptions = [MKLaunchOptionsDirectionsModeDefault: MKLaunchOptionsDirectionsModeKey]
+            mapItem.openInMaps(launchOptions: nil)
+            
         })
     }
 

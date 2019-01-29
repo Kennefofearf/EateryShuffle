@@ -29,7 +29,7 @@ class RestaurantController {
         let parameters = ["term":"\(MilesAndRadiusController.shared.searchTerm)","latitude":"\(latitude)","longitude":"\(longitude)","radius":"\(MilesAndRadiusController.shared.radius)","limit":"\(50)","price":"\(MilesAndRadiusController.shared.budget)"]
         
         var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        components?.queryItems = parameters.flatMap { URLQueryItem(name: $0.key, value: $0.value) }
+        components?.queryItems = parameters.compactMap { URLQueryItem(name: $0.key, value: $0.value) }
         guard let url = components?.url else { completion([]); return }
         
         var request = URLRequest(url: url)
@@ -51,7 +51,7 @@ class RestaurantController {
             let results = jsonDictionary["businesses"] as? [[String: Any]]
             else { completion([]); return }
             
-            let restaurants = results.flatMap { Restaurant(dictionary: $0, context: nil) }
+            let restaurants = results.compactMap { Restaurant(dictionary: $0, context: nil) }
             self.shared.restaurants = restaurants
             
             completion(restaurants)
@@ -69,9 +69,9 @@ extension MutableCollection {
         guard sizeIndex > 1 else { return }
         
         for (firstOrdered, orderedCount) in zip(indices, stride(from: sizeIndex, to: 1, by: -1)) {
-            let indexRange: IndexDistance = numericCast(arc4random_uniform(numericCast(orderedCount)))
+            let indexRange = arc4random_uniform(numericCast(orderedCount))
             guard indexRange != 0 else { continue }
-            let originalIndex = index(firstOrdered, offsetBy: indexRange)
+            let originalIndex = firstOrdered
             self.swapAt(firstOrdered, originalIndex)
             
         }
